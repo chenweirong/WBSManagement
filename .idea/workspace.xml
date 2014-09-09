@@ -39,8 +39,8 @@
       <file leaf-file-name="views.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/WBSManagement/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3008658" vertical-offset="311" max-vertical-offset="1245">
-              <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.3008658" vertical-offset="296" max-vertical-offset="1230">
+              <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
               <folding>
                 <element signature="e#25#85#0" expanded="true" />
               </folding>
@@ -380,7 +380,11 @@
       <created>1410234111979</created>
       <updated>1410234111979</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="cc">
+      <created>1410234220807</created>
+      <updated>1410234220807</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -706,8 +710,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/WBSManagement/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3008658" vertical-offset="311" max-vertical-offset="1245">
-          <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.3008658" vertical-offset="296" max-vertical-offset="1230">
+          <caret line="29" column="23" selection-start-line="29" selection-start-column="23" selection-end-line="29" selection-end-column="23" />
           <folding>
             <element signature="e#25#85#0" expanded="true" />
           </folding>
