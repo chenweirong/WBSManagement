@@ -1,6 +1,6 @@
 #-*- encoding:UTF-8 -*- 
 # Django settings for WBSManagement project.
-
+# 测试GIT
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
