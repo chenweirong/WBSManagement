@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>系统登录</title>
+<link rel="stylesheet" type="text/css" href="/static/js/themes/icon.css"/>
+<link rel="stylesheet" type="text/css" href="/static/js/themes/gray/easyui.css"/>
+</head>
+
+<body>
+<div id="loginWin" class="easyui-window" title="登录" style="width:350px;height:218px;padding:5px;" >
+    <div class="easyui-layout">
+            <div border="false" style="padding:5px;background:#fff;border:1px solid #ccc;">
+        <form id="loginForm" method="post">
+            <div style="padding:5px 0;">
+                <label for="username">帐号:</label>
+                <input type="text" name="username" style="width:260px;"/>
+            </div>
+            <div style="padding:5px 0;">
+                <label for="password">密码:</label>
+                <input type="password" name="password" style="width:260px;"/>
+            </div>
+            <div style="padding:5px 0;">
+                <label for="verifyCode">验证:</label>
+                <input type="text" name="verifyCode" style="width:100px;"/>
+                <a href="javascript:reloadcode();" title="更换一张验证码图片"><img src="/validate" id="safecode" alt="看不清，请换一张" /></a> <a href="javascript:reloadcode();" title="更换一张验证码图片">换一张</a>
+                
+
+            </div>
+             <div style="padding:5px 0;text-align: center;color: red;" id="showMsg"> </div>
+        </form>
+            </div>
+            <div  border="false" style="text-align:right;padding:5px 0;">
+                <a class="easyui-linkbutton"  href="javascript:void(0)" onclick="login()">登录</a>
+                <a class="easyui-linkbutton"  href="javascript:void(0)" onclick="cleardata()">重置</a>
+            </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.easyui.min.js"></script>
+<!-- <script type="text/javascript" src="/static/js/django_jquery_ajax_fix.js"></script> -->
+<script type="text/javascript">
+document.onkeydown = function(e){
+    var event = e || window.event;  
+    var code = event.keyCode || event.which || event.charCode;
+    if (code == 13) {
+        login();
+    }
+};
+$(function(){
+    $("input[name='username']").focus();
+});
+function cleardata(){
+    $('#loginForm').form('clear');
+}
+function reloadcode(){
+document.getElementById('safecode').src = '/validate?tryagain='+Math.random();	
+}
+function login(){
+	if($("input[name='username']").val()=="")
+	{
+		$("#showMsg").html("用户名为空，请输入");
+        $("input[name='username']").focus();
+		return;
+	}
+	if($("input[name='password']").val()=="")
+	{
+		$("#showMsg").html("密码为空，请输入");
+        $("input[name='password']").focus();
+		return;
+	}
+	if($("input[name='verifyCode']").val()=="")
+	{
+		$("#showMsg").html("验证码为空，请输入");
+        $("input[name='verifyCode']").focus();
+		return;
+	}
+    //ajax异步提交  
+           $.ajax({
+                  type:"POST",   //post提交方式默认是get
+                  url:"/login",
+                  data:$("#loginForm").serialize(),   //序列化
+                  error:function(request,status,error) {      // 设置表单提交出>错
+                        if(request.status==400)
+                        {
+                                $("#showMsg").html(request.responseText);  //登>录错误提示信息
+                                $.messager.alert('出错了',request.responseText);
+                                reloadcode();
+                        }
+                        else
+                                $.messager.alert('后台返回错',request.status+"  "+error);
+                  },
+                  success:function(data) {
+                      document.location = "/workplace";
+                  }
+            });
+
+
+}
+</script>
+</html>

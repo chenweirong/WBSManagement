@@ -1,0 +1,40 @@
+在apache的配置文件 httpd.conf中，按照如下内容配置wsgi相应内容
+
+DocumentRoot "/Library/WebServer/Documents"
+
+Alias /robots.txt /Library/WebServer/Documents/OlyMathWeb/static/robots.txt
+Alias /favicon.ico /Library/WebServer/Documents/OlyMathWeb/static/favicon.ico
+
+AliasMatch ^/([^/]*\.css) /LibraryWebServer/Documents/OlyMathWeb/static/css/$1
+
+Alias /media/ /Library/WebServer/Documents/OlyMathWeb/media/
+Alias /static/ /Library/WebServer/Documents/OlyMathWeb/static/
+#Alias /static/admin/ /Library/Python/2.7/site-packages/django/contrib/admin/
+
+<Directory /Library/WebServer/Documents/OlyMathWeb/static>
+    Options FollowSymLinks
+    AllowOverride None
+Order deny,allow
+Allow from all
+</Directory>
+
+<Directory /Library/WebServer/Documents/OlyMathWeb/media>
+    Options FollowSymLinks
+    AllowOverride None
+Order deny,allow
+Allow from all
+</Directory>
+
+
+WSGIScriptAlias / /Library/WebServer/Documents/OlyMathWeb/OlyMathWeb/wsgi.py
+WSGIPythonPath /Library/WebServer/Documents/OlyMathWeb:/Library/Python/2.7/site-packages
+#WSGIDeamonProcess OlyMathWeb python-path=/Library/WebServer/Documents/OlyMathWeb:/Library/Python/2.7/site-packages
+#WSGIProcessGroup OlyMathWeb
+
+<Directory /Library/WebServer/Documents/OlyMathWeb/OlyMathWeb>
+<Files wsgi.py>
+    Options FollowSymLinks
+Order deny,allow
+Allow from all
+</Files>
+</Directory>

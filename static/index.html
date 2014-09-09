@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Olymath网站</title>
+    <link href="css/default.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="js/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="js/themes/icon.css" />
+    <script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src='js/outlook2.js'> </script>
+    <script type="text/javascript" src="js/easyloader.js"></script>
+
+    <script type="text/javascript">
+	 var _menus = {"menus":[
+						{"menuid":"1","icon":"icon-sys","menuname":"第一个menuid",
+							"menus":[{"menuname":"访问nongfuit网站","icon":"icon-nav","url":"http://www.nongfuit.com"},
+									{"menuname":"demo.html文件","icon":"icon-add","url":"demo.html"},
+									{"menuname":"demo2.html文件","icon":"icon-users","url":"demo2.html"},
+									{"menuname":"demo2.html文件","icon":"icon-role","url":"demo2.html"},
+									{"menuname":"demo.html文件","icon":"icon-set","url":"demo.html"},
+									{"menuname":"demo.html文件","icon":"icon-log","url":"demo.html"}
+								]
+						},{"menuid":"8","icon":"icon-sys","menuname":"第二个menuid",
+							"menus":[{"menuname":"菜单","icon":"icon-nav","url":"demo.html"},
+									{"menuname":"菜单","icon":"icon-nav","url":"demo1.html"}
+								]
+						},{"menuid":"56","icon":"icon-sys","menuname":"第三个menuid",
+							"menus":[{"menuname":"菜单","icon":"icon-nav","url":"demo1.html"},
+									{"menuname":"菜单","icon":"icon-nav","url":"demo2.html"}
+								]
+						},{"menuid":"28","icon":"icon-sys","menuname":"第4个menuid",
+							"menus":[{"menuname":"菜单","icon":"icon-nav","url":"demo.html"},
+								]
+						},{"menuid":"39","icon":"icon-sys","menuname":"第5个menuid",
+							"menus":[{"menuname":"菜单","icon":"icon-nav","url":"/shop/productcatagory.aspx"},
+								]
+						}
+				]};
+
+        function openPwd() {
+            $('#w').window({
+                title: '窗口标题',
+                width: 300,
+                modal: true,
+                shadow: true,
+                closed: true,
+                height: 160,
+                resizable:false
+            });
+        }
+        function close() {
+            $('#w').window('close');
+        }
+
+        
+
+
+        function serverLogin() {
+            var $newpass = $('#txtNewPass');
+            var $rePass = $('#txtRePass');
+
+            if ($newpass.val() == '') {
+                msgShow('请输入密码ʾ', '密码不可为空', 'warning');
+                return false;
+            }
+            if ($rePass.val() == '') {
+                msgShow('请再次输入密码', '密码不可为空', 'warning');
+                return false;
+            }
+
+            if ($newpass.val() != $rePass.val()) {
+                msgShow('两次密码不同', '两次输入的新密码不相同，请重新输入', 'warning');
+                return false;
+            }
+
+            $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
+                msgShow('新密码', '新密码已经修改成功<br>请重新登录' + msg, 'info');
+                $newpass.val('');
+                $rePass.val('');
+                close();
+            });
+            
+        }
+
+        $(function() {
+
+            openPwd();
+            //
+            $('#editpass').click(function() {
+                $('#w').window('open');
+            });
+
+            $('#btnEp').click(function() {
+                serverLogin();
+            });
+
+           
+
+            $('#loginOut').click(function() {
+                $.messager.confirm('退出登录', '是否要退出登录?', function(r) {
+
+                    if (r) {
+                        location.href = '/ajax/loginout.ashx';
+                    }
+                });
+
+            });
+			
+			
+			
+        });
+		
+		
+
+    </script>
+
+</head>
+<body class="easyui-layout" style="overflow-y: hidden"  scroll="no">
+<noscript>
+<div style=" position:absolute; z-index:100000; height:2046px;top:0px;left:0px; width:100%; background:white; text-align:center;">
+    <img src="images/noscript.gif" alt='javascript不可运行' />
+</div></noscript>
+    <div region="north" split="true" border="false" style="overflow: hidden; height: 30px;
+        background: url(images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
+        line-height: 20px;color: #fff; font-family: Verdana, 宋体">
+        <span style="float:right; padding-right:20px;" class="head">用户，你好 <a href="#" id="editpass">修改密码</a> <a href="#" id="loginOut">退出登录</a></span>
+        <span style="padding-left:10px; font-size: 16px; "><img src="images/blocks.gif" width="20" height="20" align="absmiddle" /> Olympic Math 后台管理系统</span>
+    </div>
+    <div region="south" split="true" style="height: 30px; background: #D2E0F2; ">
+    </div>
+    <div region="west" split="true" title="功能菜单标题" style="width:180px;" id="west">
+<div class="easyui-accordion" fit="true" border="false">
+				
+			</div>
+
+    </div>
+    <div id="mainPanle" region="center" style="background: #eee; overflow-y:hidden">
+        <div id="tabs" class="easyui-tabs"  fit="true" border="false" >
+			<div title="主工作区" style="padding:20px;overflow:hidden;" id="home">
+				
+			<h1>Welcome to jQuery UI!</h1>
+
+			</div>
+		</div>
+    </div>
+    
+    <div id="w" class="easyui-window" title="窗口" collapsible="false" minimizable="false"
+        maximizable="false" icon="icon-save"  style="width: 300px; height: 150px; padding: 5px;
+        background: #fafafa;">
+        <div class="easyui-layout" fit="true">
+            <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+                <table cellpadding=3>
+                    <tr>
+                        <td>新密码</td>
+                        <td><input id="txtNewPass" type="password" class="txt01" /></td>
+                    </tr>
+                    <tr>
+                        <td>再次新密码</td>
+                        <td><input id="txtRePass" type="password" class="txt01" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
+                <a id="btnEp" class="easyui-linkbutton" icon="icon-ok" href="javascript:void(0)" >
+                   保存</a> <a class="easyui-linkbutton" icon="icon-cancel" href="javascript:void(0)"
+                        onclick="$('#w').window('close');">取消</a>
+            </div>
+        </div>
+    </div>
+
+	<div id="mm" class="easyui-menu" style="width:150px;">
+		<div id="mm-tabclose">关闭</div>
+		<div id="mm-tabcloseall">全部关闭</div>
+		<div id="mm-tabcloseother">关闭其他</div>
+		<div class="menu-sep"> </div>
+		<div id="mm-tabcloseright">关闭右边</div>
+		<div id="mm-tabcloseleft">关闭左边</div>
+		<div class="menu-sep"> </div>
+		<div id="mm-exit">什么都不做</div>
+	</div>
+
+
+</body>
+</html>

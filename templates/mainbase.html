@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>西部商学院WBS后台管理</title>
+    <link href="/static/css/mywebdefault.css" rel="stylesheet" type="text/css" />
+    <link href="/static/css/default.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/themes/default/easyui.css" />
+    <link rel="stylesheet" type="text/css" href="/static/js/themes/icon.css" />
+    <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src='/static/js/outlook2.js'> </script>
+    <script type="text/javascript" src="/static/js/easyloader.js"></script>
+
+    <script type="text/javascript">
+	 // var _menus = {"menus":[
+						// {"menuid":"1","icon":"icon-sys","menuname":"第一个menuid",
+							// "menus":[{"menuname":"访问nongfuit网站","icon":"icon-nav","url":"http://www.nongfuit.com"},
+									// {"menuname":"demo.html文件","icon":"icon-add","url":"demo.html"},
+									// {"menuname":"demo2.html文件","icon":"icon-users","url":"demo2.html"},
+									// {"menuname":"demo2.html文件","icon":"icon-role","url":"demo2.html"},
+									// {"menuname":"demo.html文件","icon":"icon-set","url":"demo.html"},
+									// {"menuname":"demo.html文件","icon":"icon-log","url":"demo.html"}
+								// ]
+						// },{"menuid":"8","icon":"icon-sys","menuname":"第二个menuid",
+							// "menus":[{"menuname":"菜单","icon":"icon-nav","url":"demo.html"},
+									// {"menuname":"菜单","icon":"icon-nav","url":"demo1.html"}
+								// ]
+						// },{"menuid":"56","icon":"icon-sys","menuname":"第三个menuid",
+							// "menus":[{"menuname":"菜单","icon":"icon-nav","url":"demo1.html"},
+									// {"menuname":"菜单","icon":"icon-nav","url":"demo2.html"}
+								// ]
+						// },{"menuid":"28","icon":"icon-sys","menuname":"第4个menuid",
+							// "menus":[{"menuname":"菜单","icon":"icon-nav","url":"demo.html"},
+								// ]
+						// },{"menuid":"39","icon":"icon-sys","menuname":"第5个menuid",
+							// "menus":[{"menuname":"菜单","icon":"icon-nav","url":"/shop/productcatagory.aspx"},
+								// ]
+						// }
+				// ]};
+		var _menus ;
+           $.ajax({            
+                  type:"POST", 
+                  async:false,  
+                  url:"/getmenu", 
+                  error:function(request,status,error) {      // 设置表单提交出错  
+                  	if(request.status==400)
+                  	{
+                  		$.messager.alert('出错了',request.responseText);
+                  	}
+                  	else
+                  		$.messager.alert('后台返回错',request.status+"  "+error);
+                  },
+                  success:function(data) {
+					_menus=data;  //jQuery.parseJSON(data);如果服务端返回类型为text/plain则需要parseJson
+                  	//_menus=data;
+                  }            
+            });    
+               
+        function openPwd() {
+            $('#w').window({
+                title: '修改密码',
+                width: 300,
+                modal: true,
+                shadow: true,
+                closed: true,
+                height: 160,
+                resizable:false
+            });
+        };
+        function close() {
+            $('#w').window('close');
+        }
+
+        
+
+
+        function updnewpasswd() {
+            var $newpass = $('#txtNewPass');
+            var $rePass = $('#txtRePass');
+
+            if ($newpass.val() == '') {
+                msgShow('请输入密码', '密码不可为空', 'warning');
+                return false;
+            }
+            if ($rePass.val() == '') {
+                msgShow('请再次输入密码', '密码不可为空', 'warning');
+                return false;
+            }
+
+            if ($newpass.val() != $rePass.val()) {
+                msgShow('两次密码不同', '两次输入的新密码不相同，请重新输入', 'warning');
+                return false;
+            }
+
+
+           $.ajax({            
+                  type:"POST", 
+                  //async:false,  
+                  url:"/updpasswd", 
+                  data:{'newpwd':$newpass.val()},
+                  error:function(request,status,error) {      // 设置表单提交出错  
+                  	if(request.status==400)
+                  	{
+                  		$.messager.alert('出错了',request.responseText);
+                  	}
+                  	else
+                  		$.messager.alert('后台返回错',request.status+"  "+error);
+                  },
+                  success:function(data) {
+					if(data){
+					close();
+					$.messager.defaults = { ok: "确认"};
+	                $.messager.alert('修改成功', '密码修改成功,请重新登录!',"warning",function () {
+            															$newpass.val('');
+                														$rePass.val('');
+                														close();
+																location.href = '/logout';
+        														});
+					}
+              }     
+            });    
+        }
+
+        $(function() {
+
+            openPwd();
+            //
+            $('#editpass').click(function() {
+                $('#w').window('open');
+            });
+
+            $('#btnUpdpasswdOK').click(function() {
+                updnewpasswd();
+            });
+
+           
+
+            $('#loginOut').click(function() {
+		$.messager.defaults = { ok: "确认", cancel: "取消" };
+                $.messager.confirm('退出登录', '是否要退出登录?', function(r) {
+
+                    if (r) {
+                        location.href = '/logout';
+                    }
+                });
+
+            });
+			
+			
+			
+        });
+		
+		
+
+    </script>
+
+</head>
+<body class="easyui-layout" style="overflow-y: hidden"  scroll="no">
+	{% load staticfiles %}
+<noscript>
+<div style=" position:absolute; z-index:100000; height:2046px;top:0px;left:0px; width:100%; background:white; text-align:center;">
+    <img src="{% static "images/noscript.gif" %}" alt='javascript不可运行' />
+</div></noscript>
+
+    <div region="north" split="true" border="false" style="overflow: hidden; height: 30px;
+        background: url({% static "images/layout-browser-hd-bg.gif" %}) #7f99be repeat-x center 50%;
+        line-height: 24px;color: #fff; font-family: Verdana,'宋体'">
+        <img src="{% static "images/blocks.gif" %}" style="float:left; padding-left:5px; width:25px; height:25px"  align="absmiddle" />
+        <span style="float:right; padding-right:20px;" class="head">当前用户：{{ loginusername }} | 选择操作：<a href="#" id="editpass">修改密码</a> / <a href="#" id="loginOut">退出登录</a></span>
+        <span style="padding-left:5px; font-size: 16px; ">WBS智能终端 后台管理系统</span>
+    </div>
+    
+    <div region="south" split="true" style="height: 30px; background: #D2E0F2; ">
+    	
+    </div>
+    
+    <div region="west" split="true" title="主菜单" style="width:180px;" id="west">
+		<div class="easyui-accordion" fit="true" border="false">
+		</div>
+    </div>
+    
+    <div id="mainPanle" region="center" style="background: #eee; overflow-y:hidden">
+        <div id="tabs" class="easyui-tabs"  fit="true" border="false" >
+			<!-- <div title="主工作区" style="padding:20px;overflow:hidden;" id="home">
+				
+			<h1>主工作区</h1>
+			
+			</div> -->
+		</div>
+    </div>
+    
+    <div id="w" class="easyui-window" title="窗口" collapsible="false" minimizable="false"
+        maximizable="false" icon="icon-save"  style="width: 300px; height: 150px; padding: 5px;
+        background: #fafafa;">
+        <div class="easyui-layout" fit="true">
+            <div region="center" border="false" style="padding: 10px; background: #fff; border: 1px solid #ccc;">
+                <table cellpadding=3>
+                    <tr>
+                        <td>输入新密码：</td>
+                        <td><input id="txtNewPass" type="password" class="txt01" /></td>
+                    </tr>
+                    <tr>
+                        <td>重复新密码：</td>
+                        <td><input id="txtRePass" type="password" class="txt01" /></td>
+                    </tr>
+                </table>
+            </div>
+            <div region="south" border="false" style="text-align: right; height: 30px; line-height: 30px;">
+                <a id="btnUpdpasswdOK" class="easyui-linkbutton"  href="javascript:void(0)" >
+                   保存</a> <a class="easyui-linkbutton"  href="javascript:void(0)"
+                        onclick="$('#w').window('close');">取消</a>
+            </div>
+        </div>
+    </div>
+
+	
+</body>
+</html>
