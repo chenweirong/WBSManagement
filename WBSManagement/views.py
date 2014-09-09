@@ -8,7 +8,7 @@ from WBSManagement import threadlocals
 from django.contrib.auth.models import User
 import StringIO
 
-
+#测试上传的时间
 def validate(request):
     mstream=StringIO.StringIO()
     validate_code=create_verifycode(size=(120,24),draw_lines=False,draw_points=False)
