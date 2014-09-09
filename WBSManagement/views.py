@@ -28,6 +28,7 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 
 def userlogin(request):
+    print request
     if request.method != 'POST':
         return HttpResponseBadRequest("错：Need Post Method. 调用方法不正确.")
         #result={"message":"Need Post Method. 调用方法不正确.","error":400,}
