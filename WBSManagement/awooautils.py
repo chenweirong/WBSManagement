@@ -5,7 +5,7 @@ import random
 from PIL import Image,ImageDraw,ImageFont,ImageFilter
 import os.path
 
-_lower_cases="abcdefghjkmnpqrstuvwxy"
+_lower_cases="abcdefhkmnrstuvwx"
 _upper_cases=_lower_cases.upper()
 _numbers=''.join(map(str,range(3,10)))
 init_cases=''.join((_lower_cases,_upper_cases,_numbers))
@@ -114,9 +114,6 @@ def getServerTime():
     t1970=datetime(1970,1,1,0,0,0,0)
     timespan=utcnow-t1970
     return u'%s'%long(timespan.total_seconds()/600)
-    
-    
-
 
 """
 继承AdminSite，修改admin的默认部分路径，删除admin路径，使用自行定义的（在urls文件里面)
@@ -132,7 +129,6 @@ class AwooaAdminSite(AdminSite):
         """
         del urls[0]
         return urls
-    
 
 """
 处理 md5
@@ -157,14 +153,12 @@ def getFileMd5(filename):
     f.close()
     return myhash.hexdigest().upper()
 
-
 """
 字符串时间密码验证
 根据字符串明码、密码判断是否符合
 明码计算3个时间数字，前后10分钟的数字生成密码进行判断
 """
 def checkStudentPwd(sid, pwd,encodedstr):
-        
     utcnow=datetime.utcnow()
     t1970=datetime(1970,1,1,0,0,0,0)
     timespan=utcnow-t1970

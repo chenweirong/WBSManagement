@@ -218,12 +218,12 @@ def reqentrance(request):
         """
         g_sid, g_cid = checkStudentAndcidExist()
         if retrst['result'] != 0:
-            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)))       
+            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)))
 
         student_fromdb = checkStudentAndcid(g_sid,g_cid).values('nickname','photo','email','sid','startlevelid_id')
         
         if retrst['result'] != 0:
-            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)) )              
+            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)) )
 
         retrst['result'] = 0
         retrst['content'] = ValuesQuerySetToDict(student_fromdb) 
@@ -236,7 +236,7 @@ def reqentrance(request):
         """
         g_sid, g_cid = checkStudentAndcidExist()
         if retrst['result'] != 0:
-            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)) )      
+            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)) )
         
         if 'newpwd' not in request.GET:
             retrst['result'] = -1
@@ -245,7 +245,7 @@ def reqentrance(request):
 
         checkStudentAndcid(g_sid, g_cid)
         if retrst['result'] != 0:
-            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)))       
+            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)))
         
         newpwd=base64.decodestring(request.GET['newpwd'])
         
@@ -270,7 +270,7 @@ def reqentrance(request):
         """
         g_sid, g_cid = checkStudentAndcidExist()
         if retrst['result'] != 0:
-            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)))       
+            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)))
         
         if 'dataid' not in request.GET:
             retrst['result'] = -1
@@ -280,7 +280,7 @@ def reqentrance(request):
 
         checkStudentAndcid(g_sid, g_cid)
         if retrst['result'] != 0:
-            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)))       
+            return respJson(HttpResponseBadRequest(json.dumps(retrst,  ensure_ascii=False)))
 
         if dataid == '101' or dataid == "top":
             student=request.GET['student']
@@ -485,7 +485,8 @@ def reqentrance(request):
         """
         type=6 下载图片
         """
-        filepath=os.path.join(settings.MEDIA_ROOT+'/Student_photo', request.GET['filename'])
+        print request
+        filepath=os.path.join(settings.MEDIA_ROOT, request.GET['filename'])
         filename=request.GET['filename']
         filesize=os.path.getsize(filepath)
         downloadsize=filesize
