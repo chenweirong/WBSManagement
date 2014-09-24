@@ -54,6 +54,7 @@ function addTab(subtitle,url){
 			width:$('#mainPanle').width()-10,
 			height:$('#mainPanle').height()-26
 		});
+
 	}
 	tabClose();
 }
